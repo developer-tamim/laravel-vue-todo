@@ -4,18 +4,9 @@ import { Head } from "@inertiajs/vue3";
 </script>
 
 <template>
-
     <Head title="Dashboard" />
 
     <AuthenticatedLayout>
-        <!-- <template #header>
-            <h2
-                class="text-xl font-semibold leading-tight text-gray-800"
-            >
-                Dashboard
-            </h2>
-        </template> -->
-
         <div class="py-12">
             <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
                 <div class="overflow-hidden bg-white shadow-sm sm:rounded-lg">
@@ -35,13 +26,13 @@ import { Head } from "@inertiajs/vue3";
                                 <thead class="bg-gray-100">
                                     <tr>
                                         <th class="w-10 px-4 py-2">SL</th>
-                                        <th class="w-64 px-4 py-2">Tasks</th>
+                                        <th class="w-64 px-4 py-2 text-left">Tasks</th>
                                         <th class="w-24 px-4 py-2 text-center">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr class="bg-white hover:bg-gray-100">
-                                        <th class="px-4 py-2">1</th>
+                                    <tr v-for="(task, index) in tasks" :key="index" class="bg-white hover:bg-gray-100">
+                                        <th class="px-4 py-2">{{ index + 1 }}</th>
                                         <td class="px-4 py-2">{{ task }}</td>
                                         <td class="px-4 py-2 text-center">
                                             <button

@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
 Route::get('/', function () {
-    return Inertia::render('Auth/Login', [
+    return Inertia::render('Welcome', [
         'canLogin' => Route::has('login'),
         'canRegister' => Route::has('register'),
         'laravelVersion' => Application::VERSION,
@@ -28,3 +28,5 @@ Route::middleware('auth')->group(function () {
 require __DIR__.'/auth.php';
 
 Route::get('todo', [TodoController::class, 'index'])->name('todo.index');
+Route::get('todo', [TodoController::class, 'create'])->name('todo.create');
+Route::post('todo', [TodoController::class, 'store'])->name('todo.store');

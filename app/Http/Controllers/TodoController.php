@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Todo;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -14,6 +15,7 @@ class TodoController extends Controller
      */
     public function index()
     {
+        $todos = Todo::all();
         return Inertia::render('Todo/Todo');
     }
 
@@ -22,7 +24,7 @@ class TodoController extends Controller
      */
     public function create()
     {
-        //
+        return Inertia::render('Todo/Create');
     }
 
     /**
@@ -30,7 +32,15 @@ class TodoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validatedData = $request->validate([
+            'title' => 'required|string|max:255',
+            'description' => 'nullable|string',
+            'status' => 'required|string|max:255|in:Pending,Completed',
+        ]);
+
+        Todo::create($validatedData);
+
+        return Inertia::redirect(route('todo.index'));
     }
 
     /**

@@ -1,7 +1,7 @@
 import { defineConfig } from 'vite';
 import laravel from 'laravel-vite-plugin';
 import vue from '@vitejs/plugin-vue';
-import inertia from '@inertiajs/vue3';
+// import inertia from '@inertiajs/vue3';
 
 export default defineConfig({
     plugins: [
@@ -17,6 +17,6 @@ export default defineConfig({
                 },
             },
         }),
-        inertia(),
+        // inertia(),
     ],
 });

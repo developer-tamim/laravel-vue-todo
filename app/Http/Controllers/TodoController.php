@@ -15,8 +15,12 @@ class TodoController extends Controller
      */
     public function index()
     {
-        $todos = Todo::all();
-        return Inertia::render('Todo/Todo');
+        // $todos = Todo::all();
+        // return Inertia::render('Todo/Todo');
+        $tasks = Todo::all();
+        return Inertia::render('Dashboard', [
+            'tasks' => $tasks,
+        ]);
     }
 
     /**

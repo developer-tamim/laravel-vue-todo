@@ -1,7 +1,6 @@
 <script setup>
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import { Head } from "@inertiajs/vue3";
-import Todo from "./Todo/Todo.vue";
 </script>
 
 <template>
@@ -13,10 +12,10 @@ import Todo from "./Todo/Todo.vue";
                 <div class="overflow-hidden bg-white shadow-sm sm:rounded-lg">
                     <div class="p-6 text-gray-900">
 
-                        <!-- Todo Start -->
-                         <Todo/>
-                        <!-- Todo End-->
-                         
+                        <!-- main content Start -->
+                         <h1>Dashboard</h1>
+                        <!-- main content End-->
+
                     </div>
                 </div>
             </div>

@@ -1,79 +1,127 @@
-this is my Todo.vue file
+<script>
+import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
+import { Head } from "@inertiajs/vue3";
+</script>
 
 <template>
-    <div class="p-6">
-        <h1 class="text-2xl font-bold mb-4">To-do List</h1>
-        <button @click="openModal('add')" class="mb-4 px-4 py-2 bg-blue-500 text-white rounded">Add Task</button>
 
-        <table class="w-full border-collapse border border-gray-300">
-            <thead>
-                <tr class="bg-gray-200">
-                    <th class="p-2">SL</th>
-                    <th class="border p-2">Tasks</th>
-                    <th class="border p-2">Description</th>
-                    <th class="border p-2">Status</th>
-                    <th class="p-2">Action</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr v-for="(task, index) in tasks" :key="task.id" class="border">
-                    <td class="p-2 flex items-center justify-center">{{ index + 1 }}</td>
-                    <td class="border p-2">
-                        {{ task.title }}
-                        <div class="text-sm text-gray-500">{{ task.createdAt }}</div>
-                    </td>
-                    <td class="border p-2">{{ task.description }}</td>
-                    <td class="border p-2">{{ task.status }}</td>
-                    <td class="p-2 flex items-center justify-center space-x-2">
-                        <button @click="openModal('view', task)" class="text-green-500">View</button>
-                        <button @click="openModal('edit', task)" class="text-blue-500">Edit</button>
-                        <button @click="deleteTask(task.id)" class="text-red-500">Delete</button>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+    <Head title="Dashboard" />
 
-        <div v-if="isModalOpen" class="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50">
-            <div class="bg-white p-6 rounded shadow-lg w-96">
-                <h2 class="text-xl font-bold mb-4">
-                    {{ modalMode === 'add' ? 'Add Task' : modalMode === 'edit' ? 'Edit Task' : 'View Task' }}
-                </h2>
-                <label class="block mb-2">Task Title</label>
-                <input v-model="taskForm.title" :readonly="modalMode === 'view'" class="w-full p-2 border rounded mb-2"
-                    type="text" />
+    <AuthenticatedLayout>
+        <div class="py-12">
+            <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
+                <div class="overflow-hidden bg-white shadow-sm sm:rounded-lg">
+                    <div class="p-6 text-gray-900">
+                        <!-- todo start -->
+                        <div class="p-6">
+                            <h1 class="mb-4 text-2xl font-bold">To-do List</h1>
+                            <button @click="openModal('add')" class="px-4 py-2 mb-4 text-white bg-blue-500 rounded">
+                                Add Task
+                            </button>
 
-                    <label class="block mb-2">Status</label>
-                    <select v-model="taskForm.status" :disabled="modalMode === 'view'"
-                        class="w-full p-2 border rounded mb-4">
-                        <option value="Pending">Pending</option>
-                        <option value="Completed">Completed</option>
-                    </select>
+                            <table class="w-full border border-collapse border-gray-300">
+                                <thead>
+                                    <tr class="bg-gray-200">
+                                        <th class="p-2">SL</th>
+                                        <th class="p-2 border">Tasks</th>
+                                        <th class="p-2 border">Description</th>
+                                        <th class="p-2 border">Status</th>
+                                        <th class="p-2">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr v-for="(task, index) in tasks" :key="task.id" class="border">
+                                        <td class="flex items-center justify-center p-2">
+                                            {{ index + 1 }}
+                                        </td>
+                                        <td class="p-2 border">
+                                            {{ task.title }}
+                                            <div class="text-sm text-gray-500">
+                                                {{ task.createdAt }}
+                                            </div>
+                                        </td>
+                                        <td class="p-2 border">
+                                            {{ task.description }}
+                                        </td>
+                                        <td class="p-2 border">
+                                            {{ task.status }}
+                                        </td>
+                                        <td class="flex items-center justify-center p-2 space-x-2">
+                                            <button @click="openModal('view', task)" class="text-green-500">
+                                                View
+                                            </button>
+                                            <button @click="openModal('edit', task)" class="text-blue-500">
+                                                Edit
+                                            </button>
+                                            <button @click="deleteTask(task.id)" class="text-red-500">
+                                                Delete
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
 
-                <label class="block mb-2">Description</label>
-                <textarea v-model="taskForm.description" :readonly="modalMode === 'view'"
-                    class="w-full p-2 border rounded mb-2"></textarea>
+                            <div v-if="isModalOpen"
+                                class="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50">
+                                <div class="p-6 bg-white rounded shadow-lg w-96">
+                                    <h2 class="mb-4 text-xl font-bold">
+                                        {{
+                                            modalMode === "add"
+                                                ? "Add Task"
+                                                : modalMode === "edit"
+                                                    ? "Edit Task"
+                                                    : "View Task"
+                                        }}
+                                    </h2>
+                                    <label class="block mb-2">Task Title</label>
+                                    <input v-model="taskForm.title" :readonly="modalMode === 'view'"
+                                        class="w-full p-2 mb-2 border rounded" type="text" />
 
+                                    <label class="block mb-2">Status</label>
+                                    <select v-model="taskForm.status" :disabled="modalMode === 'view'"
+                                        class="w-full p-2 mb-4 border rounded">
+                                        <option value="Pending">Pending</option>
+                                        <option value="Completed">
+                                            Completed
+                                        </option>
+                                    </select>
 
-                <div class="flex justify-end space-x-2">
-                    <button @click="closeModal" class="px-4 py-2 bg-gray-500 text-white rounded">Close</button>
-                    <button v-if="modalMode !== 'view'" @click="saveTask"
-                        class="px-4 py-2 bg-blue-500 text-white rounded">
-                        Save
-                    </button>
+                                    <label class="block mb-2">Description</label>
+                                    <textarea v-model="taskForm.description" :readonly="modalMode === 'view'"
+                                        class="w-full p-2 mb-2 border rounded"></textarea>
+
+                                    <div class="flex justify-end space-x-2">
+                                        <button @click="closeModal" class="px-4 py-2 text-white bg-gray-500 rounded">
+                                            Close
+                                        </button>
+                                        <button v-if="modalMode !== 'view'" @click="saveTask"
+                                            class="px-4 py-2 text-white bg-blue-500 rounded">
+                                            Save
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+    </AuthenticatedLayout>
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref } from "vue";
 
 const tasks = ref([]);
 const isModalOpen = ref(false);
-const modalMode = ref('add'); // 'add', 'edit', or 'view'
+const modalMode = ref("add"); // 'add', 'edit', or 'view'
 const editingTask = ref(null);
-const taskForm = ref({ title: '', description: '', status: 'Pending', createdAt: '' });
+const taskForm = ref({
+    title: "",
+    description: "",
+    status: "Pending",
+    createdAt: "",
+});
 
 const openModal = (mode, task = null) => {
     modalMode.value = mode;
@@ -83,7 +131,12 @@ const openModal = (mode, task = null) => {
         taskForm.value = { ...task };
     } else {
         editingTask.value = null;
-        taskForm.value = { title: '', description: '', status: 'Pending', createdAt: new Date().toLocaleString() };
+        taskForm.value = {
+            title: "",
+            description: "",
+            status: "Pending",
+            createdAt: new Date().toLocaleString(),
+        };
     }
 };
 
@@ -101,6 +154,6 @@ const saveTask = () => {
 };
 
 const deleteTask = (id) => {
-    tasks.value = tasks.value.filter(task => task.id !== id);
+    tasks.value = tasks.value.filter((task) => task.id !== id);
 };
 </script>

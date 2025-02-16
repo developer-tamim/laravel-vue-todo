@@ -22,7 +22,6 @@ class TodoController extends Controller
             'tasks' => $tasks,
         ]);
     }
-    // test text
 
     /**
      * Show the form for creating a new resource.

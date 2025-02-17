@@ -22,11 +22,11 @@ import { Head } from "@inertiajs/vue3";
                             <table class="w-full border border-collapse border-gray-300">
                                 <thead>
                                     <tr class="bg-gray-200">
-                                        <th class="p-2">SL</th>
-                                        <th class="p-2 border">Tasks</th>
-                                        <th class="p-2 border">Description</th>
-                                        <th class="p-2 border">Status</th>
-                                        <th class="p-2">Action</th>
+                                        <th class="p-2" style="width:10%">SL</th>
+                                        <th class="p-2 border" style="width:20%">Tasks</th>
+                                        <th class="p-2 border" style="width:40%">Description</th>
+                                        <th class="p-2 border" style="width:15%">Status</th>
+                                        <th class="p-2" style="width:15%">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -44,7 +44,10 @@ import { Head } from "@inertiajs/vue3";
                                             {{ task.description }}
                                         </td>
                                         <td class="p-2 border">
-                                            {{ task.status }}
+                                            <span
+                                                :class="task.status === 'Completed' ? 'text-green-500 font-semibold' : 'text-orange-500 font-semibold'">
+                                                {{ task.status }}
+                                            </span>
                                         </td>
                                         <td class="flex items-center justify-center p-2 space-x-2">
                                             <button @click="openModal('view', task)" class="text-green-500">
@@ -114,7 +117,7 @@ import { ref } from "vue";
 
 const tasks = ref([]);
 const isModalOpen = ref(false);
-const modalMode = ref("add"); // 'add', 'edit', or 'view'
+const modalMode = ref("add");
 const editingTask = ref(null);
 const taskForm = ref({
     title: "",
